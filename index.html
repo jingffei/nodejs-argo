@@ -1,966 +1,1253 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodeFlow | Visual Development Platform</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Roboto', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #f9fbfd;
-        }
-        
-        h1, h2, h3, h4 {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            line-height: 1.3;
-        }
-        
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* Header & Navigation */
-        header {
-            background-color: #fff;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
-            position: fixed;
-            width: 100%;
-            z-index: 1000;
-        }
-        
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo-icon {
-            color: #4361ee;
-            font-size: 28px;
-            margin-right: 10px;
-        }
-        
-        .logo-text {
-            font-family: 'Poppins', sans-serif;
-            font-size: 24px;
-            font-weight: 700;
-            color: #333;
-        }
-        
-        .logo-text span {
-            color: #4361ee;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-        
-        .nav-links li {
-            margin-left: 30px;
-        }
-        
-        .nav-links a {
-            text-decoration: none;
-            color: #555;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        .nav-links a:hover {
-            color: #4361ee;
-        }
-        
-        .cta-button {
-            background-color: #4361ee;
-            color: white;
-            border: none;
-            padding: 12px 28px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-        }
-        
-        .cta-button:hover {
-            background-color: #3a56d4;
-            transform: translateY(-2px);
-        }
-        
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: #333;
-            cursor: pointer;
-        }
-        
-        /* Hero Section */
-        .hero {
-            padding: 150px 0 100px;
-            background: linear-gradient(135deg, #f0f4ff 0%, #f9fbfd 100%);
-        }
-        
-        .hero-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .hero-text {
-            flex: 1;
-            padding-right: 40px;
-        }
-        
-        .hero-text h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            color: #222;
-        }
-        
-        .hero-text h1 span {
-            color: #4361ee;
-        }
-        
-        .hero-text p {
-            font-size: 18px;
-            color: #666;
-            margin-bottom: 30px;
-            max-width: 600px;
-        }
-        
-        .hero-buttons {
-            display: flex;
-            gap: 15px;
-        }
-        
-        .secondary-button {
-            background-color: white;
-            color: #4361ee;
-            border: 2px solid #4361ee;
-            padding: 12px 28px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .secondary-button:hover {
-            background-color: #f0f4ff;
-        }
-        
-        .hero-image {
-            flex: 1;
-            text-align: center;
-        }
-        
-        .hero-image img {
-            max-width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 20px 40px rgba(67, 97, 238, 0.15);
-        }
-        
-        /* Features Section */
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        
-        .section-title h2 {
-            font-size: 36px;
-            color: #222;
-            margin-bottom: 15px;
-        }
-        
-        .section-title p {
-            color: #666;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        
-        .features {
-            padding: 100px 0;
-            background-color: white;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-        }
-        
-        .feature-card {
-            background: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .feature-icon {
-            background-color: #eef2ff;
-            color: #4361ee;
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            font-size: 28px;
-        }
-        
-        .feature-card h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
-        }
-        
-        .feature-card p {
-            color: #666;
-        }
-        
-        /* Benefits Section */
-        .benefits {
-            padding: 100px 0;
-            background-color: #f0f4ff;
-        }
-        
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-        
-        .benefit-item {
-            text-align: center;
-            padding: 30px 20px;
-        }
-        
-        .benefit-icon {
-            color: #4361ee;
-            font-size: 40px;
-            margin-bottom: 20px;
-        }
-        
-        .benefit-item h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
-        }
-        
-        .benefit-item p {
-            color: #666;
-        }
-        
-        /* Testimonials */
-        .testimonials {
-            padding: 100px 0;
-            background-color: white;
-        }
-        
-        .testimonial-slider {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-        }
-        
-        .testimonial {
-            background: #f9fbfd;
-            padding: 40px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        .testimonial-text {
-            font-size: 18px;
-            font-style: italic;
-            margin-bottom: 30px;
-            color: #555;
-        }
-        
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .author-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: #ddd;
-            margin-right: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: #4361ee;
-            font-size: 24px;
-        }
-        
-        .author-info h4 {
-            font-size: 18px;
-            margin-bottom: 5px;
-        }
-        
-        .author-info p {
-            color: #777;
-            font-size: 14px;
-        }
-        
-        /* Pricing Section */
-        .pricing {
-            padding: 100px 0;
-            background-color: #f9fbfd;
-        }
-        
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-        
-        .pricing-card {
-            background: white;
-            border-radius: 10px;
-            padding: 40px 30px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            text-align: center;
-            transition: transform 0.3s;
-        }
-        
-        .pricing-card.featured {
-            border-top: 5px solid #4361ee;
-            transform: scale(1.05);
-            position: relative;
-        }
-        
-        .featured-badge {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #4361ee;
-            color: white;
-            padding: 5px 20px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-        }
-        
-        .pricing-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .pricing-card.featured:hover {
-            transform: scale(1.05) translateY(-10px);
-        }
-        
-        .plan-name {
-            font-size: 24px;
-            margin-bottom: 15px;
-            color: #333;
-        }
-        
-        .plan-price {
-            font-size: 48px;
-            font-weight: 700;
-            color: #4361ee;
-            margin-bottom: 20px;
-        }
-        
-        .plan-price span {
-            font-size: 16px;
-            color: #777;
-        }
-        
-        .plan-features {
-            list-style: none;
-            margin-bottom: 30px;
-        }
-        
-        .plan-features li {
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
-            color: #555;
-        }
-        
-        .plan-features li:last-child {
-            border-bottom: none;
-        }
-        
-        /* CTA Section */
-        .cta-section {
-            padding: 100px 0;
-            background: linear-gradient(135deg, #4361ee 0%, #3a56d4 100%);
-            text-align: center;
-            color: white;
-        }
-        
-        .cta-section h2 {
-            font-size: 36px;
-            margin-bottom: 20px;
-        }
-        
-        .cta-section p {
-            font-size: 18px;
-            max-width: 700px;
-            margin: 0 auto 30px;
-            opacity: 0.9;
-        }
-        
-        .cta-section .cta-button {
-            background-color: white;
-            color: #4361ee;
-            font-size: 16px;
-            padding: 15px 40px;
-        }
-        
-        .cta-section .cta-button:hover {
-            background-color: #f0f4ff;
-        }
-        
-        /* Footer */
-        footer {
-            background-color: #222;
-            color: #ccc;
-            padding: 70px 0 20px;
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            margin-bottom: 50px;
-        }
-        
-        .footer-column h3 {
-            font-size: 20px;
-            color: white;
-            margin-bottom: 25px;
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-        
-        .footer-links a {
-            color: #aaa;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-links a:hover {
-            color: #4361ee;
-        }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid #444;
-            font-size: 14px;
-            color: #888;
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .hero-content {
-                flex-direction: column;
-            }
-            
-            .hero-text {
-                padding-right: 0;
-                margin-bottom: 50px;
-                text-align: center;
-            }
-            
-            .hero-text p {
-                margin: 0 auto 30px;
-            }
-            
-            .pricing-card.featured {
-                transform: none;
-            }
-            
-            .pricing-card.featured:hover {
-                transform: translateY(-10px);
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-            }
-            
-            .hero-text h1 {
-                font-size: 36px;
-            }
-            
-            .section-title h2 {
-                font-size: 30px;
-            }
-            
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .hero-buttons button {
-                width: 100%;
-                max-width: 300px;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .hero {
-                padding: 130px 0 80px;
-            }
-            
-            .features, .benefits, .testimonials, .pricing, .cta-section {
-                padding: 70px 0;
-            }
-            
-            .feature-card, .testimonial {
-                padding: 25px;
-            }
-            
-            .plan-price {
-                font-size: 36px;
-            }
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CATIA Learning Guide — From First Sketch to Finished Drawing</title>
+<meta name="description" content="A structured, English-language CATIA learning guide: interface, workbenches, part design, assembly, surfacing, drafting, shortcuts and practice projects.">
+<style>
+  :root{
+    color-scheme: light;
+    --bg:#f5f7fa;
+    --surface:#ffffff;
+    --surface-2:#f0f3f8;
+    --ink:#111827;
+    --ink-2:#3f4b5b;
+    --muted:#6b7686;
+    --line:#dde3ec;
+    --accent:#0b63c5;
+    --accent-soft:#e6effb;
+    --accent-2:#0f9d8f;
+    --warn:#a15c00;
+    --warn-soft:#fdf3e3;
+    --code-bg:#f2f5f9;
+    --shadow:0 1px 2px rgba(16,24,40,.06), 0 8px 24px rgba(16,24,40,.06);
+    --radius:14px;
+    --mono:ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    --sans:system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  html[data-theme="dark"]{
+    color-scheme: dark;
+    --bg:#0d1117;
+    --surface:#151b23;
+    --surface-2:#1b232d;
+    --ink:#e8edf4;
+    --ink-2:#c2ccd9;
+    --muted:#93a0b1;
+    --line:#26303c;
+    --accent:#63a9f7;
+    --accent-soft:#17263a;
+    --accent-2:#3fd0bf;
+    --warn:#e8b168;
+    --warn-soft:#2a2113;
+    --code-bg:#1b232d;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:16px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent); text-decoration:none}
+  a:hover{text-decoration:underline}
+  h1,h2,h3,h4{line-height:1.25; margin:0 0 .5em}
+  h2{font-size:1.6rem; letter-spacing:-.01em; margin-top:0}
+  h3{font-size:1.15rem; margin-top:1.8em; color:var(--ink)}
+  h4{font-size:1rem; margin-top:1.4em; color:var(--ink-2)}
+  p{margin:0 0 1em; color:var(--ink-2)}
+  ul,ol{color:var(--ink-2); padding-left:1.25em}
+  li{margin:.3em 0}
+  strong{color:var(--ink)}
+  code{
+    font-family:var(--mono);
+    font-size:.86em;
+    background:var(--code-bg);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:.1em .35em;
+  }
+  pre{
+    background:var(--code-bg);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:.85rem 1rem;
+    overflow:auto;
+    font-family:var(--mono);
+    font-size:.83rem;
+    line-height:1.5;
+    color:var(--ink-2);
+  }
+  pre code{background:none;border:0;padding:0;font-size:1em}
+
+  /* ---------- layout ---------- */
+  .shell{display:flex; min-height:100vh; align-items:flex-start}
+  .sidebar{
+    position:sticky; top:0; flex:0 0 292px; width:292px;
+    height:100vh; overflow-y:auto;
+    background:var(--surface);
+    border-right:1px solid var(--line);
+    padding:1.15rem 1rem 3rem;
+  }
+  .main{flex:1 1 auto; min-width:0; padding:2rem 2.4rem 5rem; max-width:1120px}
+  .brand{display:flex; align-items:center; gap:.6rem; margin-bottom:1rem}
+  .brand-mark{
+    flex:0 0 auto; width:34px; height:34px; border-radius:9px;
+    background:linear-gradient(135deg, var(--accent), var(--accent-2));
+    display:grid; place-items:center; color:#fff; font-weight:800; font-size:.78rem; letter-spacing:.02em;
+  }
+  .brand-text b{display:block; font-size:.95rem; line-height:1.2}
+  .brand-text span{font-size:.74rem; color:var(--muted)}
+
+  .search{position:relative; margin-bottom:.9rem}
+  .search input{
+    width:100%; padding:.5rem .7rem .5rem 2rem;
+    border:1px solid var(--line); border-radius:9px;
+    background:var(--surface-2); color:var(--ink);
+    font-family:inherit; font-size:.85rem;
+  }
+  .search input:focus{outline:2px solid var(--accent-soft); border-color:var(--accent)}
+  .search svg{position:absolute; left:.6rem; top:50%; transform:translateY(-50%); opacity:.55}
+
+  nav.toc{display:flex; flex-direction:column; gap:.12rem; margin-top:.4rem}
+  nav.toc a{
+    display:flex; align-items:baseline; gap:.5rem;
+    color:var(--ink-2); font-size:.86rem; padding:.34rem .55rem;
+    border-radius:8px; border-left:2px solid transparent;
+  }
+  nav.toc a:hover{background:var(--surface-2); text-decoration:none; color:var(--ink)}
+  nav.toc a.active{background:var(--accent-soft); color:var(--accent); border-left-color:var(--accent); font-weight:600}
+  nav.toc a .num{font-family:var(--mono); font-size:.72rem; color:var(--muted); min-width:1.2em}
+  nav.toc a.hidden{display:none}
+  .nav-group{
+    font-size:.68rem; text-transform:uppercase; letter-spacing:.09em;
+    color:var(--muted); margin:1.05rem 0 .35rem .55rem; font-weight:700;
+  }
+
+  .progress-wrap{
+    margin-top:1.2rem; padding:.75rem .8rem;
+    background:var(--surface-2); border:1px solid var(--line); border-radius:10px;
+  }
+  .progress-wrap .row{display:flex; justify-content:space-between; font-size:.76rem; color:var(--muted); margin-bottom:.4rem}
+  .progress-track{height:7px; background:var(--line); border-radius:99px; overflow:hidden}
+  .progress-fill{height:100%; width:0%; background:linear-gradient(90deg, var(--accent), var(--accent-2)); border-radius:99px; transition:width .25s ease}
+
+  /* ---------- hero ---------- */
+  .hero{
+    background:var(--surface); border:1px solid var(--line);
+    border-radius:var(--radius); padding:1.9rem 2rem; box-shadow:var(--shadow);
+    margin-bottom:1.6rem;
+  }
+  .hero .eyebrow{
+    text-transform:uppercase; letter-spacing:.12em; font-size:.7rem;
+    font-weight:700; color:var(--accent-2); margin-bottom:.6rem;
+  }
+  .hero h1{font-size:clamp(1.7rem, 3.4vw, 2.5rem); letter-spacing:-.02em; margin-bottom:.5rem}
+  .hero .lede{font-size:1.02rem; max-width:68ch; margin-bottom:1.2rem}
+  .badges{display:flex; flex-wrap:wrap; gap:.45rem; margin-bottom:1.2rem}
+  .badge{
+    font-size:.74rem; font-weight:600; padding:.25rem .6rem; border-radius:99px;
+    background:var(--accent-soft); color:var(--accent); border:1px solid transparent;
+  }
+  .badge.alt{background:var(--surface-2); color:var(--ink-2); border-color:var(--line)}
+  .facts{display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:.6rem}
+  .fact{background:var(--surface-2); border:1px solid var(--line); border-radius:10px; padding:.6rem .75rem}
+  .fact dt{font-size:.7rem; text-transform:uppercase; letter-spacing:.07em; color:var(--muted); font-weight:700}
+  .fact dd{margin:.15rem 0 0; font-size:.9rem; color:var(--ink)}
+
+  /* ---------- sections & cards ---------- */
+  section.card{
+    background:var(--surface); border:1px solid var(--line);
+    border-radius:var(--radius); padding:1.6rem 1.9rem; box-shadow:var(--shadow);
+    margin-bottom:1.4rem; scroll-margin-top:1rem;
+  }
+  .section-head{display:flex; align-items:center; gap:.7rem; margin-bottom:1rem}
+  .section-head .idx{
+    font-family:var(--mono); font-size:.75rem; font-weight:700;
+    color:var(--accent); background:var(--accent-soft);
+    border-radius:7px; padding:.2rem .5rem;
+  }
+  .section-head h2{margin:0}
+
+  .grid-2{display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:1rem}
+  .grid-3{display:grid; grid-template-columns:repeat(auto-fit, minmax(230px,1fr)); gap:1rem}
+  .panel{background:var(--surface-2); border:1px solid var(--line); border-radius:11px; padding:1rem 1.1rem}
+  .panel h4{margin-top:0}
+  .panel p:last-child, .panel ul:last-child{margin-bottom:0}
+
+  .callout{
+    border-left:3px solid var(--accent); background:var(--accent-soft);
+    border-radius:0 10px 10px 0; padding:.85rem 1rem; margin:1.2rem 0;
+  }
+  .callout.warn{border-left-color:var(--warn); background:var(--warn-soft)}
+  .callout p{margin:0; color:var(--ink-2)}
+  .callout .label{font-weight:700; font-size:.78rem; text-transform:uppercase; letter-spacing:.07em; display:block; margin-bottom:.25rem}
+  .callout .label{color:var(--accent)}
+  .callout.warn .label{color:var(--warn)}
+
+  .table-scroll{overflow-x:auto; border:1px solid var(--line); border-radius:11px}
+  table{border-collapse:collapse; width:100%; font-size:.88rem; min-width:520px}
+  thead th{
+    text-align:left; background:var(--surface-2); color:var(--muted);
+    font-size:.72rem; text-transform:uppercase; letter-spacing:.07em;
+    padding:.6rem .8rem; border-bottom:1px solid var(--line); white-space:nowrap;
+  }
+  td{padding:.55rem .8rem; border-bottom:1px solid var(--line); color:var(--ink-2); vertical-align:top}
+  tbody tr:last-child td{border-bottom:0}
+  tbody tr:hover td{background:var(--surface-2)}
+  td code{white-space:nowrap}
+
+  /* ---------- diagrams ---------- */
+  figure{margin:1.3rem 0}
+  figure svg{width:100%; height:auto; display:block; background:var(--surface-2); border:1px solid var(--line); border-radius:11px}
+  figcaption{font-size:.8rem; color:var(--muted); margin-top:.55rem; text-align:center}
+
+  /* ---------- steps ---------- */
+  ol.steps{list-style:none; padding:0; counter-reset:step; margin:1rem 0 0}
+  ol.steps > li{
+    position:relative; padding:.1rem 0 1.1rem 2.6rem; counter-increment:step;
+    border-left:1px solid var(--line); margin-left:1.05rem;
+  }
+  ol.steps > li:last-child{border-left-color:transparent; padding-bottom:0}
+  ol.steps > li::before{
+    content:counter(step);
+    position:absolute; left:-1.05rem; top:0;
+    width:2.1rem; height:2.1rem; border-radius:50%;
+    background:var(--surface); border:1px solid var(--accent); color:var(--accent);
+    display:grid; place-items:center; font-family:var(--mono); font-size:.8rem; font-weight:700;
+  }
+  ol.steps h4{margin:.25rem 0 .35rem; color:var(--ink)}
+
+  /* ---------- roadmap checklist ---------- */
+  .stage{border:1px solid var(--line); border-radius:11px; margin-bottom:.9rem; overflow:hidden}
+  .stage-head{
+    display:flex; align-items:center; justify-content:space-between; gap:1rem;
+    background:var(--surface-2); padding:.7rem 1rem; border-bottom:1px solid var(--line);
+  }
+  .stage-head .t{font-weight:700; font-size:.95rem; color:var(--ink)}
+  .stage-head .meta{font-size:.74rem; color:var(--muted); font-family:var(--mono); white-space:nowrap}
+  .stage-body{padding:.6rem .9rem .8rem}
+  label.check{display:flex; gap:.6rem; align-items:flex-start; padding:.3rem .2rem; cursor:pointer; font-size:.89rem; color:var(--ink-2)}
+  label.check:hover{color:var(--ink)}
+  label.check input{margin:.3rem 0 0; accent-color:var(--accent); flex:0 0 auto; width:1rem; height:1rem}
+  label.check input:checked + span{color:var(--muted); text-decoration:line-through}
+  .stage-actions{display:flex; gap:.5rem; margin:.2rem 0 .9rem}
+  .btn{
+    font-family:inherit; font-size:.78rem; font-weight:600;
+    background:var(--surface); color:var(--ink-2);
+    border:1px solid var(--line); border-radius:8px; padding:.35rem .7rem; cursor:pointer;
+  }
+  .btn:hover{border-color:var(--accent); color:var(--accent)}
+
+  /* ---------- misc ---------- */
+  .kbd{
+    font-family:var(--mono); font-size:.78rem;
+    background:var(--surface); border:1px solid var(--line); border-bottom-width:2px;
+    border-radius:6px; padding:.08rem .38rem; color:var(--ink); white-space:nowrap;
+  }
+  .pill{font-size:.72rem; font-weight:700; padding:.12rem .5rem; border-radius:99px; background:var(--surface-2); border:1px solid var(--line); color:var(--muted)}
+  .two-col{columns:2; column-gap:2rem}
+  @media (max-width:760px){ .two-col{columns:1} }
+
+  .mobile-bar{display:none}
+  footer.page-foot{color:var(--muted); font-size:.8rem; padding:0 .3rem; max-width:1120px}
+  footer.page-foot p{color:var(--muted); font-size:.8rem}
+
+  @media (max-width:1000px){
+    .shell{display:block}
+    .sidebar{
+      position:static; width:auto; height:auto; border-right:0; border-bottom:1px solid var(--line);
+      padding:.9rem 1rem;
+    }
+    .sidebar nav.toc{display:none}
+    .sidebar.open nav.toc{display:flex}
+    .mobile-bar{display:flex; align-items:center; justify-content:space-between; gap:.6rem}
+    .main{padding:1.3rem 1rem 3.5rem}
+    section.card, .hero{padding:1.3rem 1.15rem}
+  }
+  @media print{
+    .sidebar,.mobile-bar{display:none}
+    body{background:#fff}
+    section.card,.hero{box-shadow:none; border-color:#ccc; break-inside:avoid}
+  }
+</style>
 </head>
 <body>
-    <!-- Header & Navigation -->
-    <header>
-        <div class="container">
-            <nav>
-                <div class="logo">
-                    <div class="logo-icon"><i class="fas fa-bezier-curve"></i></div>
-                    <div class="logo-text">Code<span>Flow</span></div>
-                </div>
-                
-                <ul class="nav-links">
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#benefits">Benefits</a></li>
-                    <li><a href="#testimonials">Testimonials</a></li>
-                    <li><a href="#pricing">Pricing</a></li>
-                    <li><a href="#">Resources</a></li>
-                </ul>
-                
-                <button class="cta-button">Start Free Trial</button>
-                <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
-            </nav>
-        </div>
-    </header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="mobile-bar">
+      <div class="brand">
+        <div class="brand-mark">C5</div>
+        <div class="brand-text"><b>CATIA Learning Guide</b><span>English edition</span></div>
+      </div>
+      <button class="btn" id="navToggle" aria-expanded="false" aria-controls="toc">Menu</button>
+    </div>
+    <div class="brand" id="deskBrand">
+      <div class="brand-mark">C5</div>
+      <div class="brand-text"><b>CATIA Learning Guide</b><span>English edition</span></div>
+    </div>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1>Build Apps Faster With <span>Visual Development</span></h1>
-                    <p>CodeFlow empowers teams to create enterprise-grade applications with minimal coding. Drag, drop, and connect components to build powerful web and mobile apps in record time.</p>
-                    <div class="hero-buttons">
-                        <button class="cta-button">Start Building Free</button>
-                        <button class="secondary-button">Watch Demo</button>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="CodeFlow Platform Interface">
-                </div>
-            </div>
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input type="search" id="navSearch" placeholder="Filter sections…" aria-label="Filter sections">
+    </div>
+
+    <nav class="toc" id="toc" aria-label="Table of contents">
+      <div class="nav-group">Foundations</div>
+      <a href="#intro"><span class="num">01</span><span>What CATIA is</span></a>
+      <a href="#interface"><span class="num">02</span><span>Interface &amp; navigation</span></a>
+      <a href="#workbenches"><span class="num">03</span><span>Workbench map</span></a>
+      <a href="#roadmap"><span class="num">04</span><span>Learning roadmap</span></a>
+      <div class="nav-group">Core modelling</div>
+      <a href="#workflow"><span class="num">05</span><span>The 6-stage workflow</span></a>
+      <a href="#sketcher"><span class="num">06</span><span>Sketcher essentials</span></a>
+      <a href="#partdesign"><span class="num">07</span><span>Part Design features</span></a>
+      <a href="#tree"><span class="num">08</span><span>Spec tree &amp; design intent</span></a>
+      <div class="nav-group">Assemblies &amp; documentation</div>
+      <a href="#assembly"><span class="num">09</span><span>Assembly design</span></a>
+      <a href="#drafting"><span class="num">10</span><span>Drafting &amp; drawings</span></a>
+      <a href="#surfacing"><span class="num">11</span><span>Surfacing basics</span></a>
+      <div class="nav-group">Practice</div>
+      <a href="#shortcuts"><span class="num">12</span><span>Shortcuts &amp; habits</span></a>
+      <a href="#projects"><span class="num">13</span><span>Practice projects</span></a>
+      <a href="#resources"><span class="num">14</span><span>Files, settings, help</span></a>
+    </nav>
+
+    <div class="progress-wrap">
+      <div class="row"><span>Checklist progress</span><span id="progressText">0 / 0</span></div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="stage-actions" style="margin:.7rem 0 0">
+        <button class="btn" id="resetProgress" type="button">Reset</button>
+        <button class="btn" id="expandAll" type="button">Expand all</button>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="hero">
+      <div class="eyebrow">Self-paced study plan</div>
+      <h1>Learn CATIA: from your first sketch to a released drawing</h1>
+      <p class="lede">
+        A practical, English-language route through CATIA V5 with notes that also apply to the
+        3DEXPERIENCE <em>Mechanical Design</em> role. Work top to bottom, tick items off as you go,
+        and build the parts in the practice section rather than only reading about them.
+      </p>
+      <div class="badges">
+        <span class="badge">CATIA V5 (R20–V5-6R2024)</span>
+        <span class="badge alt">3DEXPERIENCE notes included</span>
+        <span class="badge alt">Beginner → intermediate</span>
+        <span class="badge alt">Checklists saved in your browser</span>
+      </div>
+      <dl class="facts">
+        <div class="fact"><dt>Typical first goal</dt><dd>One part + one assembly + one drawing</dd></div>
+        <div class="fact"><dt>Suggested pace</dt><dd>6–8 weeks at 5–7 h/week</dd></div>
+        <div class="fact"><dt>Main file types</dt><dd><code>.CATPart</code> · <code>.CATProduct</code> · <code>.CATDrawing</code></dd></div>
+        <div class="fact"><dt>Hard prerequisites</dt><dd>None — but 2D print reading helps</dd></div>
+      </dl>
+    </div>
+
+    <section class="card" id="intro">
+      <div class="section-head"><span class="idx">01</span><h2>What CATIA is (and what it is not)</h2></div>
+      <p>
+        CATIA is Dassault Systèmes' high-end CAD/CAM/CAE platform. It is strongest where geometry has to
+        survive downstream: large assemblies, complex curvature, associative drawings, and manufacturing
+        or simulation that reuses the same model. That is why aerospace, automotive and industrial
+        equipment teams use it.
+      </p>
+      <div class="grid-2">
+        <div class="panel">
+          <h4>What that means for you</h4>
+          <ul>
+            <li><strong>Everything is feature history.</strong> You edit the recipe, not the result.</li>
+            <li><strong>Geometry is associative.</strong> Change a sketch, and the pad, fillet, assembly position and drawing view follow.</li>
+            <li><strong>Discipline pays.</strong> Clean sketches and named features make a model reusable by a colleague; sloppy ones make it unmaintainable.</li>
+          </ul>
         </div>
+        <div class="panel">
+          <h4>Two products, one learning curve</h4>
+          <ul>
+            <li><strong>CATIA V5</strong> — the classic desktop install (<code>CATPart</code>, <code>CATProduct</code>, <code>CATDrawing</code>). Most tutorials, job posts and courses target V5.</li>
+            <li><strong>3DEXPERIENCE (CATIA V6 / R20xx)</strong> — roles instead of workbenches, data on the platform, largely the same modelling logic.</li>
+            <li>Icons and menus move between releases. When a tutorial's button is missing, check the <em>workbench</em> first, then the release.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout">
+        <span class="label">Rule of thumb</span>
+        <p>Learn V5 structure first — sketches, constraints, pads/pockets, assemblies, drawings. Those concepts transfer to 3DEXPERIENCE almost unchanged; only the shell around them differs.</p>
+      </div>
     </section>
 
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-title">
-                <h2>Powerful Features for Rapid Development</h2>
-                <p>CodeFlow provides all the tools you need to build, deploy, and scale applications without writing extensive code.</p>
-            </div>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-th-large"></i>
-                    </div>
-                    <h3>Visual Builder</h3>
-                    <p>Drag and drop UI components to design responsive interfaces. Connect data sources with simple point-and-click actions.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <h3>Database Integration</h3>
-                    <p>Connect to any data source with built-in connectors. Automatically generate CRUD operations without writing SQL.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h3>Cross-Platform</h3>
-                    <p>Build once, deploy everywhere. Generate applications for web, iOS, and Android from a single visual design.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <h3>Extensible with Code</h3>
-                    <p>Add custom functionality with JavaScript when needed. Our platform doesn't limit your creativity or complexity.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>Enterprise Security</h3>
-                    <p>Built-in authentication, authorization, and data encryption. SOC2 compliant with enterprise-grade security features.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <h3>One-Click Deployment</h3>
-                    <p>Deploy to cloud or on-premises with a single click. Automatic scaling and monitoring included.</p>
-                </div>
-            </div>
+    <section class="card" id="interface">
+      <div class="section-head"><span class="idx">02</span><h2>Interface &amp; navigation</h2></div>
+      <p>
+        CATIA rewards muscle memory. Before modelling anything, spend 20 minutes learning to move the camera
+        and to read the tree. If you cannot orbit without thinking, every sketch will take twice as long.
+      </p>
+      <div class="grid-2">
+        <div class="panel">
+          <h4>Three mouse-button navigation</h4>
+          <div class="table-scroll" style="margin-top:.6rem">
+            <table style="min-width:0">
+              <thead><tr><th>Action</th><th>Mouse</th></tr></thead>
+              <tbody>
+                <tr><td>Pan</td><td>Middle button drag</td></tr>
+                <tr><td>Rotate</td><td>Middle + right button drag</td></tr>
+                <tr><td>Zoom</td><td>Middle + left button drag, or scroll wheel</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="margin-top:.7rem">A three-button mouse is effectively mandatory. On a laptop trackpad, plug one in.</p>
         </div>
+        <div class="panel">
+          <h4>The five areas that matter</h4>
+          <ul>
+            <li><strong>Specification tree</strong> (left) — the live history of your model. Everything you build appears here, in order.</li>
+            <li><strong>3D viewport</strong> — where you work; the compass in the top-right snaps to planes and axes.</li>
+            <li><strong>Workbench toolbars</strong> (right) — change with the active workbench, so a missing tool is usually a workbench problem.</li>
+            <li><strong>Power Input field</strong> (bottom right) — type commands or feature names instead of hunting menus.</li>
+            <li><strong>Status bar</strong> (bottom) — tells you what CATIA expects next; read it when a command will not complete.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout">
+        <span class="label">Compass trick</span>
+        <p>Drag the compass onto a face or edge to align your view to it, or onto a part in an assembly to move it. Snapping the compass to a plane is the fastest way to sketch on an angled face later.</p>
+      </div>
     </section>
 
-    <!-- Benefits Section -->
-    <section class="benefits" id="benefits">
-        <div class="container">
-            <div class="section-title">
-                <h2>Why Choose CodeFlow?</h2>
-                <p>Join thousands of companies accelerating their digital transformation with low-code development.</p>
-            </div>
-            
-            <div class="benefits-grid">
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3>10x Faster Development</h3>
-                    <p>Build applications in days instead of months with visual development tools.</p>
-                </div>
-                
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-money-bill-wave"></i>
-                    </div>
-                    <h3>Reduce Costs by 70%</h3>
-                    <p>Lower development and maintenance costs with fewer resources required.</p>
-                </div>
-                
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3>Citizen Developers</h3>
-                    <p>Enable business users to build solutions with minimal IT assistance.</p>
-                </div>
-                
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3>Scale Effortlessly</h3>
-                    <p>From prototype to enterprise-scale applications with the same platform.</p>
-                </div>
-            </div>
-        </div>
+    <section class="card" id="workbenches">
+      <div class="section-head"><span class="idx">03</span><h2>Workbench map — where tools live</h2></div>
+      <p>
+        A workbench is a tool set for one job. Start a workbench from <strong>Start &gt; Mechanical Design</strong>
+        and the matching toolbars appear. Beginners lose most of their time looking for a tool that belongs to a
+        workbench they have not opened.
+      </p>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Workbench</th><th>Used for</th><th>Priority</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Sketcher</strong></td><td>2D profiles and constraints; the foundation of nearly every solid feature</td><td><span class="pill">Learn first</span></td></tr>
+            <tr><td><strong>Part Design</strong></td><td>Solids: pad, pocket, shaft, hole, rib, fillet, chamfer, draft, patterns</td><td><span class="pill">Learn first</span></td></tr>
+            <tr><td><strong>Assembly Design</strong></td><td>Combining parts with constraints; interference and clash checks</td><td><span class="pill">Learn second</span></td></tr>
+            <tr><td><strong>Drafting</strong></td><td>2D drawings generated from 3D parts and assemblies</td><td><span class="pill">Learn second</span></td></tr>
+            <tr><td><strong>Generative Shape Design</strong></td><td>Wireframe and surfaces (GSD): extrusions, lofts, blends, offsets</td><td><span class="pill">Later</span></td></tr>
+            <tr><td><strong>Wireframe &amp; Surface</strong></td><td>Classic surface tool set, still used in older training paths</td><td><span class="pill">Later</span></td></tr>
+            <tr><td><strong>Generative Drafted Shape Design</strong></td><td>Adding draft angles to surfaces for moulded parts</td><td><span class="pill">Optional</span></td></tr>
+            <tr><td><strong>DMU Kinematics</strong></td><td>Mechanisms: joints, simulation of motion</td><td><span class="pill">Optional</span></td></tr>
+            <tr><td><strong>Generative Structural Analysis</strong></td><td>First-pass FEA on parts and assemblies</td><td><span class="pill">Optional</span></td></tr>
+            <tr><td><strong>Prismatic Machining / Surface Machining</strong></td><td>CAM toolpaths for manufacturing</td><td><span class="pill">Later</span></td></tr>
+            <tr><td><strong>Knowledge Advisor</strong></td><td>Parameters, formulas, design tables, rules</td><td><span class="pill">Later</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout warn">
+        <span class="label">Common beginner trap</span>
+        <p>You can only create one solid body per Part Design operation. If a tool refuses to run, check that the active body is correct and that the previous feature is not still open — press <span class="kbd">Esc</span> to leave a pending command.</p>
+      </div>
     </section>
 
-    <!-- Testimonials -->
-    <section class="testimonials" id="testimonials">
-        <div class="container">
-            <div class="section-title">
-                <h2>Trusted by Industry Leaders</h2>
-                <p>See what our customers have to say about their experience with CodeFlow.</p>
-            </div>
-            
-            <div class="testimonial-slider">
-                <div class="testimonial">
-                    <div class="testimonial-text">
-                        "CodeFlow transformed how we deliver solutions to our business units. What used to take 6 months now takes 3 weeks. Our development team can focus on complex problems while business teams build their own solutions."
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">SC</div>
-                        <div class="author-info">
-                            <h4>Sarah Chen</h4>
-                            <p>CTO, TechGrowth Inc.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <section class="card" id="roadmap">
+      <div class="section-head"><span class="idx">04</span><h2>Learning roadmap</h2></div>
+      <p>
+        Four stages, each ending with something you can show. Tick items as you complete them — progress is stored
+        in this browser only, so nothing leaves your machine.
+      </p>
+
+      <div class="stage" data-stage>
+        <div class="stage-head"><span class="t">Stage 1 · Orientation (week 1)</span><span class="meta" data-count>0/0</span></div>
+        <div class="stage-body">
+          <label class="check"><input type="checkbox" data-check id="c1"><span>Open and close a CATPart without losing work; understand <em>Save</em> vs <em>Save As</em> vs <em>Save Management</em>.</span></label>
+          <label class="check"><input type="checkbox" data-check id="c2"><span>Navigate confidently: pan, rotate, zoom, fit-all, and standard views.</span></label>
+          <label class="check"><input type="checkbox" data-check id="c3"><span>Read the specification tree and hide/show features with right-click.</span></label>
+          <label class="check"><input type="checkbox" data-check id="c4"><span>Switch between Sketcher, Part Design, Assembly and Drafting from the Start menu.</span></label>
+          <label class="check"><input type="checkbox" data-check id="c5"><span>Set your own units, and a working directory for autosave.</span></label>
         </div>
+      </div>
+
+      <div class="stage" data-stage>
+        <div class="stage-head"><span class="t">Stage 2 · Solid modelling (weeks 2–3)</span><span class="meta" data-count>0/0</span></div>
+        <div class="stage-body">
+          <label class="check"><input type="checkbox" data-check id="c6"><span>Draw a fully constrained sketch: profile, then dimensions, then geometric constraints.</span></label>
+          <label class="check"><input type="checkbox" data-check id="c7"><span>Explain the difference between <em>ISO-constrained</em> and <em>under-constrained</em> geometry, and find the last degree of freedom.</span></label>
+          <label class="check"><input type="checkbox" data-check id="c8"><span>Build a part using pad, pocket, hole, fillet, chamfer and mirror.</span></label>
+          <label class="check"><input type="checkbox" data-check id="c9"><span>Use a pattern (rectangular and circular) and edit it after creation.</span></label>
+          <label class="check"><input type="checkbox" data-check id="c10"><span>Re-order the tree and roll the <em>Insert</em> marker to insert a feature mid-history.</span></label>
+          <label class="check"><input type="checkbox" data-check id="c11"><span>Change a driving dimension and confirm the whole model updates.</span></label>
+          <label class="check"><input type="checkbox" data-check id="c12"><span>Measure and check mass properties; assign a material.</span></label>
+        </div>
+      </div>
+
+      <div class="stage" data-stage>
+        <div class="stage-head"><span class="t">Stage 3 · Assemblies &amp; drawings (weeks 4–5)</span><span class="meta" data-count>0/0</span></div>
+        <div class="stage-body">
+          <label class="check"><input type="checkbox" data-check id="c13"><span>Create a CATProduct, insert existing parts, and understand <em>Fix</em> vs <em>Coincidence</em>.</span></label>
+          <label class="check"><input type="checkbox" data-check id="c14"><span>Apply coincidence, contact, offset and angle constraints; reach a fully constrained assembly.</span></label>
+          <label class="check"><input type="checkbox" data-check id="c15"><span>Run a clash/interference analysis and fix one real clash.</span></label>
+          <label class="check"><input type="checkbox" data-check id="c16"><span>Produce a drawing: front/top/side views, an isometric view, and a section view.</span></label>
+          <label class="check"><input type="checkbox" data-check id="c17"><span>Dimension the drawing, add a title block, and export to PDF.</span></label>
+          <label class="check"><input type="checkbox" data-check id="c18"><span>Change the 3D part and watch the drawing update.</span></label>
+        </div>
+      </div>
+
+      <div class="stage" data-stage>
+        <div class="stage-head"><span class="t">Stage 4 · Depth (weeks 6–8)</span><span class="meta" data-count>0/0</span></div>
+        <div class="stage-body">
+          <label class="check"><input type="checkbox" data-check id="c19"><span>Model a part with a surface (GSD) that is later thickened or closed into a solid.</span></label>
+          <label class="check"><input type="checkbox" data-check id="c20"><span>Use parameters and formulas so one dimension drives several features.</span></label>
+          <label class="check"><input type="checkbox" data-check id="c21"><span>Build a simple mechanism in DMU Kinematics and animate it.</span></label>
+          <label class="check"><input type="checkbox" data-check id="c22"><span>Import a neutral file (STEP or IGES) and repair a broken surface.</span></label>
+          <label class="check"><input type="checkbox" data-check id="c23"><span>Model a part from a real 2D print, end to end, without following a tutorial.</span></label>
+        </div>
+      </div>
     </section>
 
-    <!-- Pricing Section -->
-    <section class="pricing" id="pricing">
-        <div class="container">
-            <div class="section-title">
-                <h2>Simple, Transparent Pricing</h2>
-                <p>Choose the plan that fits your needs. All plans include core features with no hidden fees.</p>
-            </div>
-            
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3 class="plan-name">Starter</h3>
-                    <div class="plan-price">$29<span>/month</span></div>
-                    <ul class="plan-features">
-                        <li>Up to 5 users</li>
-                        <li>10 GB storage</li>
-                        <li>Basic components</li>
-                        <li>Community support</li>
-                        <li>1 production app</li>
-                    </ul>
-                    <button class="secondary-button">Get Started</button>
-                </div>
-                
-                <div class="pricing-card featured">
-                    <div class="featured-badge">Most Popular</div>
-                    <h3 class="plan-name">Professional</h3>
-                    <div class="plan-price">$89<span>/month</span></div>
-                    <ul class="plan-features">
-                        <li>Up to 25 users</li>
-                        <li>100 GB storage</li>
-                        <li>All components</li>
-                        <li>Priority support</li>
-                        <li>10 production apps</li>
-                        <li>Custom branding</li>
-                    </ul>
-                    <button class="cta-button">Try Free for 14 Days</button>
-                </div>
-                
-                <div class="pricing-card">
-                    <h3 class="plan-name">Enterprise</h3>
-                    <div class="plan-price">Custom</div>
-                    <ul class="plan-features">
-                        <li>Unlimited users</li>
-                        <li>Unlimited storage</li>
-                        <li>All features included</li>
-                        <li>24/7 dedicated support</li>
-                        <li>Unlimited apps</li>
-                        <li>On-premises option</li>
-                    </ul>
-                    <button class="secondary-button">Contact Sales</button>
-                </div>
-            </div>
-        </div>
+    <section class="card" id="workflow">
+      <div class="section-head"><span class="idx">05</span><h2>The 6-stage modelling workflow</h2></div>
+      <p>Almost every solid part follows the same sequence. Learn it once and CATIA stops feeling random.</p>
+      <figure>
+        <svg viewBox="0 0 920 150" role="img" aria-label="Six stage modelling workflow: sketch, constrain, create solid feature, detail, verify, document">
+          <defs>
+            <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+              <path d="M0,0 L7,3 L0,6 z" fill="var(--muted)"/>
+            </marker>
+          </defs>
+          <g font-family="var(--sans)" font-size="13" text-anchor="middle">
+            <g fill="var(--surface)" stroke="var(--accent)" stroke-width="1.4">
+              <rect x="12" y="42" width="130" height="56" rx="10"/>
+              <rect x="162" y="42" width="130" height="56" rx="10"/>
+              <rect x="312" y="42" width="130" height="56" rx="10"/>
+              <rect x="462" y="42" width="130" height="56" rx="10"/>
+              <rect x="612" y="42" width="130" height="56" rx="10"/>
+              <rect x="762" y="42" width="130" height="56" rx="10"/>
+            </g>
+            <g fill="var(--ink)">
+              <text x="77" y="66">1 · Sketch</text>
+              <text x="227" y="66">2 · Constrain</text>
+              <text x="377" y="66">3 · Solid feature</text>
+              <text x="527" y="66">4 · Detail</text>
+              <text x="677" y="66">5 · Verify</text>
+              <text x="827" y="66">6 · Document</text>
+            </g>
+            <g fill="var(--muted)" font-size="11">
+              <text x="77" y="84">profile on a plane</text>
+              <text x="227" y="84">ISO-constrained</text>
+              <text x="377" y="84">pad / shaft / rib</text>
+              <text x="527" y="84">fillets, holes, draft</text>
+              <text x="677" y="84">measure, mass, clash</text>
+              <text x="827" y="84">drawing + PDF</text>
+            </g>
+            <g stroke="var(--muted)" stroke-width="1.4" marker-end="url(#arrow)" fill="none">
+              <path d="M142,70 L158,70"/>
+              <path d="M292,70 L308,70"/>
+              <path d="M442,70 L458,70"/>
+              <path d="M592,70 L608,70"/>
+              <path d="M742,70 L758,70"/>
+            </g>
+            <text x="460" y="24" fill="var(--accent-2)" font-size="12" font-weight="700">Sketch → constrain → feature → detail → verify → document</text>
+            <text x="460" y="128" fill="var(--muted)" font-size="11">Each stage is associative: fixing stage 2 ripples forward, so get the sketch right first.</text>
+          </g>
+        </svg>
+        <figcaption>Figure 1 — The modelling loop you will repeat for the rest of your CATIA career.</figcaption>
+      </figure>
+      <ol class="steps">
+        <li>
+          <h4>Choose the right support plane and sketch the profile</h4>
+          <p>Pick a base plane (XY/YZ/ZX) that matches how the part will be manufactured or how the print dimensions it. Enter Sketcher, draw the outline roughly, and keep the geometry simple — a first sketch should usually be a plain closed profile.</p>
+        </li>
+        <li>
+          <h4>Constrain until the sketch turns green</h4>
+          <p>Add dimensions and geometric constraints until CATIA reports the sketch as fully (ISO) constrained. Green means every degree of freedom is defined; white elements are still free to move and will bite you later.</p>
+        </li>
+        <li>
+          <h4>Create the first solid feature</h4>
+          <p>Leave Sketcher and apply <strong>Pad</strong> (extruded profile) or <strong>Shaft</strong> (revolved profile). This becomes the base feature the tree grows from.</p>
+        </li>
+        <li>
+          <h4>Add material and remove material incrementally</h4>
+          <p>Work feature by feature: pad, pocket, hole, rib, slot. Add dress-up features (fillet, chamfer, draft, shell) after the main shape is dimensionally correct, so you are not fighting fillets while changing sizes.</p>
+        </li>
+        <li>
+          <h4>Verify the result</h4>
+          <p>Measure critical dimensions, check mass properties against expectation, look for unintended zero-thickness walls, and — if the part belongs to an assembly — run a clash check before calling it done.</p>
+        </li>
+        <li>
+          <h4>Document it</h4>
+          <p>Create a drawing with the standard views, dimension it, and export a PDF. A part nobody can inspect is not finished work.</p>
+        </li>
+      </ol>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <h2>Start Building Today</h2>
-            <p>Join over 10,000 companies that use CodeFlow to accelerate their application development. No credit card required for the free trial.</p>
-            <button class="cta-button">Get Started for Free</button>
+    <section class="card" id="sketcher">
+      <div class="section-head"><span class="idx">06</span><h2>Sketcher essentials</h2></div>
+      <p>
+        Sketcher is where models are won or lost. Two habits separate people who enjoy CATIA from people who
+        fight it: <strong>anchor the sketch to the origin</strong>, and <strong>constrain as you draw</strong>
+        instead of drawing everything and fixing it afterwards.
+      </p>
+
+      <figure>
+        <svg viewBox="0 0 620 380" role="img" aria-label="Fully constrained rectangle sketch with horizontal and vertical dimensions, coincidence and fix constraints">
+          <rect x="0" y="0" width="620" height="380" fill="none"/>
+          <!-- axes -->
+          <g stroke="var(--line)" stroke-width="1.5">
+            <line x1="60" y1="300" x2="420" y2="300"/>
+            <line x1="210" y1="120" x2="210" y2="345"/>
+          </g>
+          <g fill="var(--muted)" font-size="11" font-family="var(--mono)">
+            <text x="414" y="316">H</text>
+            <text x="216" y="130">V</text>
+          </g>
+          <!-- rectangle constrained to origin -->
+          <rect x="210" y="180" width="180" height="120" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2.4"/>
+          <!-- origin anchor -->
+          <g>
+            <line x1="196" y1="300" x2="224" y2="300" stroke="var(--accent-2)" stroke-width="2"/>
+            <line x1="210" y1="286" x2="210" y2="314" stroke="var(--accent-2)" stroke-width="2"/>
+            <circle cx="210" cy="300" r="3.5" fill="var(--accent-2)"/>
+            <text x="112" y="334" fill="var(--accent-2)" font-size="11" font-family="var(--mono)">Fix + coincidence to origin</text>
+          </g>
+          <!-- horizontal dimension -->
+          <g stroke="var(--accent-2)" stroke-width="1.6" fill="var(--accent-2)">
+            <line x1="210" y1="170" x2="390" y2="170"/>
+            <path d="M210,170 l12,-4 v8 z"/>
+            <path d="M390,170 l-12,-4 v8 z"/>
+            <line x1="210" y1="166" x2="210" y2="180" stroke-width="1" opacity=".6"/>
+            <line x1="390" y1="166" x2="390" y2="180" stroke-width="1" opacity=".6"/>
+            <text x="300" y="160" text-anchor="middle" font-size="13" font-family="var(--mono)">60</text>
+          </g>
+          <!-- vertical dimension -->
+          <g stroke="var(--accent-2)" stroke-width="1.6" fill="var(--accent-2)">
+            <line x1="404" y1="180" x2="404" y2="300"/>
+            <path d="M404,180 l-4,12 h8 z"/>
+            <path d="M404,300 l-4,-12 h8 z"/>
+            <line x1="390" y1="180" x2="408" y2="180" stroke-width="1" opacity=".6"/>
+            <line x1="390" y1="300" x2="408" y2="300" stroke-width="1" opacity=".6"/>
+            <text x="420" y="244" font-size="13" font-family="var(--mono)">40</text>
+          </g>
+          <!-- horizontal constraint glyph on top edge -->
+          <g transform="translate(300,180)">
+            <rect x="-26" y="-34" width="52" height="20" rx="6" fill="var(--surface)" stroke="var(--line)"/>
+            <text x="0" y="-19" text-anchor="middle" font-size="11" font-family="var(--mono)" fill="var(--ink-2)">↔ H</text>
+          </g>
+          <!-- vertical constraint glyph on left edge -->
+          <g transform="translate(210,240)">
+            <rect x="-76" y="-12" width="52" height="20" rx="6" fill="var(--surface)" stroke="var(--line)"/>
+            <text x="-50" y="2" text-anchor="middle" font-size="11" font-family="var(--mono)" fill="var(--ink-2)">↕ V</text>
+          </g>
+          <!-- legend -->
+          <g font-size="12" font-family="var(--sans)" fill="var(--ink-2)">
+            <text x="470" y="72" font-weight="700" fill="var(--ink)">Legend</text>
+            <g>
+              <rect x="470" y="86" width="16" height="12" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.4"/>
+              <text x="494" y="96">green = ISO-constrained</text>
+            </g>
+            <g>
+              <line x1="470" y1="120" x2="486" y2="120" stroke="var(--accent-2)" stroke-width="2"/>
+              <text x="494" y="124">dimension (driving)</text>
+            </g>
+            <g>
+              <text x="470" y="152" font-family="var(--mono)" fill="var(--ink-2)">↔ H</text>
+              <text x="510" y="152">horizontal</text>
+            </g>
+            <g>
+              <text x="470" y="176" font-family="var(--mono)" fill="var(--ink-2)">↕ V</text>
+              <text x="510" y="176">vertical</text>
+            </g>
+            <g>
+              <text x="470" y="200" font-family="var(--mono)" fill="var(--ink-2)">⊙</text>
+              <text x="510" y="200">coincidence / fix</text>
+            </g>
+            <text x="470" y="234" fill="var(--muted)" font-size="11">4 lines + 2 dimensions +</text>
+            <text x="470" y="250" fill="var(--muted)" font-size="11">2 H/V + origin anchor = 0 DOF</text>
+          </g>
+        </svg>
+        <figcaption>Figure 2 — A rectangle needs four lines, two driving dimensions and geometric constraints; anchoring one corner to the origin removes the last two degrees of freedom.</figcaption>
+      </figure>
+
+      <h3>The constraints you will use constantly</h3>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Constraint</th><th>What it does</th><th>Typical use</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Coincidence</strong></td><td>Merges two points, or a point onto a line</td><td>Anchor a corner to the origin</td></tr>
+            <tr><td><strong>Horizontal / Vertical</strong></td><td>Forces a line to an axis direction</td><td>Clean rectangular profiles</td></tr>
+            <tr><td><strong>Parallel / Perpendicular</strong></td><td>Relationship between two lines</td><td>Slots, brackets, ribs</td></tr>
+            <tr><td><strong>Tangent</strong></td><td>Line-to-arc or arc-to-arc continuity</td><td>Rounds blended into straight edges</td></tr>
+            <tr><td><strong>Concentric</strong></td><td>Shared centre between circles/arcs</td><td>Bosses and bores</td></tr>
+            <tr><td><strong>Symmetric</strong></td><td>Mirrors geometry about a centreline</td><td>Half-profile modelling</td></tr>
+            <tr><td><strong>Equal</strong></td><td>Same length or radius</td><td>Repeated holes, hexagons</td></tr>
+            <tr><td><strong>Fix</strong></td><td>Locks geometry in place</td><td>Origin point, imported outlines</td></tr>
+            <tr><td><strong>Auto Constraint</strong></td><td>Detects and applies obvious constraints</td><td>Speed — but review what it added</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grid-2" style="margin-top:1.2rem">
+        <div class="panel">
+          <h4>Habits that pay off</h4>
+          <ul>
+            <li>Sketch with the origin visible and constrain to it — never let a sketch float.</li>
+            <li>Prefer a few strong constraints over many weak ones.</li>
+            <li>Use construction geometry and centrelines for symmetry, then constrain to them.</li>
+            <li>Cut a profile in half and mirror it when the part is symmetric; changes stay consistent.</li>
+            <li>Name your sketches and features the moment you create them.</li>
+          </ul>
         </div>
+        <div class="panel">
+          <h4>When the sketch breaks</h4>
+          <ul>
+            <li><strong>Over-constrained?</strong> CATIA flags the conflicting constraint — delete it rather than fighting with <em>Fix</em>.</li>
+            <li><strong>Sketch won't close?</strong> Zoom in on corners; a 0.01 mm gap is invisible at normal zoom.</li>
+            <li><strong>Elements still white?</strong> Use <em>Sketch Analysis</em> to list remaining degrees of freedom.</li>
+            <li><strong>Profile refuses to pad?</strong> Check for self-intersection and for a stray overlapping line.</li>
+          </ul>
+        </div>
+      </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <div class="logo">
-                        <div class="logo-icon"><i class="fas fa-bezier-curve"></i></div>
-                        <div class="logo-text">Code<span>Flow</span></div>
-                    </div>
-                    <p style="margin-top: 20px; color: #aaa;">The leading visual development platform for building enterprise applications with minimal coding.</p>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Product</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Features</a></li>
-                        <li><a href="#">Pricing</a></li>
-                        <li><a href="#">Use Cases</a></li>
-                        <li><a href="#">Integrations</a></li>
-                        <li><a href="#">Roadmap</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Resources</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Documentation</a></li>
-                        <li><a href="#">Tutorials</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Community</a></li>
-                        <li><a href="#">Support</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Company</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="copyright">
-                <p>&copy; 2023 CodeFlow. All rights reserved.</p>
-            </div>
+    <section class="card" id="partdesign">
+      <div class="section-head"><span class="idx">07</span><h2>Part Design features</h2></div>
+      <p>
+        Solid features split into three families: <strong>add material</strong>, <strong>remove material</strong>,
+        and <strong>dress up</strong> existing geometry. Knowing the family tells you where to look in a toolbar
+        and, more importantly, when in the modelling sequence to use it.
+      </p>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Feature</th><th>Family</th><th>Needs</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Pad</strong></td><td>Add</td><td>Closed profile</td><td>Main workhorse; supports up-to-surface and up-to-next extents</td></tr>
+            <tr><td><strong>Shaft</strong></td><td>Add</td><td>Profile + axis</td><td>Revolved solids — pulleys, discs, flanges</td></tr>
+            <tr><td><strong>Rib</strong></td><td>Add</td><td>Profile + centre curve</td><td>Swept material along a path</td></tr>
+            <tr><td><strong>Multi-Pad</strong></td><td>Add</td><td>Multiple profiles</td><td>Several pads in one operation</td></tr>
+            <tr><td><strong>Pocket</strong></td><td>Remove</td><td>Closed profile</td><td>Blind, up-to-next or up-to-surface cuts</td></tr>
+            <tr><td><strong>Hole</strong></td><td>Remove</td><td>Face + position</td><td>Counterbore/countersink/threaded options; use it instead of drawing circles</td></tr>
+            <tr><td><strong>Groove</strong></td><td>Remove</td><td>Profile + axis</td><td>Revolved cut — O-ring seats, circlips</td></tr>
+            <tr><td><strong>Slot</strong></td><td>Remove</td><td>Profile + centre curve</td><td>Swept cut</td></tr>
+            <tr><td><strong>Fillet</strong></td><td>Dress-up</td><td>Edges</td><td>Apply late; keep radii consistent across a part</td></tr>
+            <tr><td><strong>Chamfer</strong></td><td>Dress-up</td><td>Edges</td><td>Standard lead-ins and deburring</td></tr>
+            <tr><td><strong>Draft</strong></td><td>Dress-up</td><td>Face + neutral plane</td><td>Mould-release angles before shelling</td></tr>
+            <tr><td><strong>Shell</strong></td><td>Dress-up</td><td>Face to open</td><td>Hollow out; do draft first for moulded parts</td></tr>
+            <tr><td><strong>Thickness</strong></td><td>Dress-up</td><td>Face</td><td>Offset a face in or out</td></tr>
+            <tr><td><strong>Rectangular / Circular Pattern</strong></td><td>Replication</td><td>Feature + direction/axis</td><td>Prefer patterns over repeated sketches</td></tr>
+            <tr><td><strong>Mirror</strong></td><td>Replication</td><td>Feature + plane</td><td>Whole-body symmetry</td></tr>
+            <tr><td><strong>Boolean operations</strong></td><td>Combine</td><td>Two bodies</td><td>Add, remove, intersect — for multi-body strategy</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout">
+        <span class="label">Modelling order that survives change</span>
+        <p>Base solid first, then major cuts, then patterns, then dress-up features (fillet/chamfer/shell), and only then cosmetic details. Fillets created early break constantly when upstream dimensions change.</p>
+      </div>
+    </section>
+
+    <section class="card" id="tree">
+      <div class="section-head"><span class="idx">08</span><h2>Specification tree &amp; design intent</h2></div>
+      <p>
+        The tree on the left is not a file browser — it is your model's recipe, executed top to bottom.
+        Editing history is normal work in CATIA, so build for it.
+      </p>
+      <div class="grid-2">
+        <div class="panel">
+          <h4>Tree operations to master</h4>
+          <ul>
+            <li><strong>Double-click</strong> a feature to edit its definition; the model rolls back so you see it in context.</li>
+            <li><strong>Right-click &gt; Properties</strong> to rename, hide/show, or change colour and transparency.</li>
+            <li><strong>Reorder</strong> by dragging a feature up or down when the sequence is wrong.</li>
+            <li><strong>Insert marker</strong> ("Define In Work Object") to add a feature in the middle of history.</li>
+            <li><strong>Deactivate</strong> a feature to test whether it is still needed — a quick way to debug a broken model.</li>
+            <li><strong>Parent/Children</strong> to see what depends on a sketch before you delete it.</li>
+          </ul>
         </div>
+        <div class="panel">
+          <h4>Design intent, concretely</h4>
+          <ul>
+            <li>Dimension what actually matters — to a functional face or axis, not to an arbitrary edge.</li>
+            <li>Keep one source of truth per size; drive repeats with patterns or formulas.</li>
+            <li>Model symmetric parts symmetrically so a change flips both sides.</li>
+            <li>Leave the model in a state where a stranger can find and change one dimension in under a minute.</li>
+          </ul>
+        </div>
+      </div>
+      <figure>
+        <svg viewBox="0 0 660 250" role="img" aria-label="Example specification tree with part, bodies and features">
+          <g font-family="var(--mono)" font-size="12.5">
+            <g fill="var(--ink)">
+              <text x="24" y="34">Bracket.CATPart</text>
+            </g>
+            <g stroke="var(--line)" stroke-width="1.4" fill="none">
+              <path d="M40,42 L40,228"/>
+              <path d="M40,62 L56,62"/>
+              <path d="M40,92 L56,92"/>
+              <path d="M40,122 L56,122"/>
+              <path d="M40,152 L56,152"/>
+              <path d="M40,182 L56,182"/>
+              <path d="M40,212 L56,212"/>
+            </g>
+            <g fill="var(--ink-2)">
+              <text x="62" y="66">xy plane</text>
+              <text x="62" y="96">yz plane</text>
+              <text x="62" y="126">zx plane</text>
+              <text x="62" y="156" fill="var(--accent)" font-weight="700">PartBody</text>
+              <text x="62" y="186">Pad.1</text>
+              <text x="62" y="216">Hole.1</text>
+            </g>
+            <g fill="var(--muted)" font-size="11">
+              <text x="200" y="156">← active body: features accumulate here</text>
+              <text x="200" y="186">← first solid feature (base)</text>
+              <text x="200" y="216">← cut created after the base</text>
+            </g>
+            <g transform="translate(430,20)">
+              <rect x="0" y="0" width="200" height="86" rx="10" fill="var(--accent-soft)" stroke="none"/>
+              <text x="14" y="24" fill="var(--accent)" font-size="11.5" font-weight="700">ORDER = RESULT</text>
+              <text x="14" y="46" fill="var(--ink-2)" font-size="11" font-family="var(--sans)">Hole.1 after Pad.1 cuts the pad.</text>
+              <text x="14" y="64" fill="var(--ink-2)" font-size="11" font-family="var(--sans)">Move Hole.1 above Pad.1 and it</text>
+              <text x="14" y="80" fill="var(--ink-2)" font-size="11" font-family="var(--sans)">disappears — nothing left to cut.</text>
+            </g>
+          </g>
+        </svg>
+        <figcaption>Figure 3 — Features execute in tree order; the <em>PartBody</em> collects them.</figcaption>
+      </figure>
+    </section>
+
+    <section class="card" id="assembly">
+      <div class="section-head"><span class="idx">09</span><h2>Assembly design</h2></div>
+      <p>
+        An assembly is a <code>.CATProduct</code> that references parts. It contains no geometry of its own —
+        only components and the constraints that position them. That is why assemblies stay small and why broken
+        links to parts are the most common problem you will hit.
+      </p>
+      <div class="grid-2">
+        <div class="panel">
+          <h4>Sequence that avoids pain</h4>
+          <ol>
+            <li>Create a new <code>CATProduct</code>, then insert existing components (do not copy geometry in).</li>
+            <li>Fix the base component — the one everything else references.</li>
+            <li>Add constraints one at a time, and rotate the view after each to confirm the move.</li>
+            <li>Watch the update symbol; if a constraint cannot be satisfied, undo instead of stacking more.</li>
+            <li>Finish with a clash and a section analysis.</li>
+          </ol>
+        </div>
+        <div class="panel">
+          <h4>Constraints &amp; tools you need</h4>
+          <ul>
+            <li><strong>Coincidence</strong> — align axes, points and planes.</li>
+            <li><strong>Contact</strong> — faces touch without a gap.</li>
+            <li><strong>Offset</strong> — a controlled gap between faces.</li>
+            <li><strong>Angle</strong> — fixed relative rotation.</li>
+            <li><strong>Fix</strong> — perfect but inflexible; use it only on the base part.</li>
+            <li><strong>Manipulation</strong> — drag parts to test remaining freedom before constraining.</li>
+            <li><strong>Clash / Section</strong> — find interference and inspect internal clearances.</li>
+            <li><strong>Scenes &amp; exploded views</strong> — for reviews and documentation.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout warn">
+        <span class="label">Moving or copying parts</span>
+        <p>If an assembly is opened on another machine or from another folder, CATIA may not find the parts. Use <strong>File &gt; Save Management</strong> to see and repair every link, and keep a project folder structure you can copy whole.</p>
+      </div>
+    </section>
+
+    <section class="card" id="drafting">
+      <div class="section-head"><span class="idx">10</span><h2>Drafting &amp; drawings</h2></div>
+      <p>
+        Drafting turns the 3D model into the 2D document a workshop actually uses. Because it is associative,
+        the drawing is a view of the model — never redraw geometry by hand.
+      </p>
+      <ol class="steps">
+        <li>
+          <h4>Start from the model, not a blank sheet</h4>
+          <p>Create a new <code>CATDrawing</code> from the part or assembly, choose a standard (ISO, ANSI, JIS) and a sheet size, then place the front view.</p>
+        </li>
+        <li>
+          <h4>Project the standard views</h4>
+          <p>Use <strong>Projection &gt; Views</strong> to generate top, side and isometric views from the front view. Keep the projection type consistent across the whole drawing.</p>
+        </li>
+        <li>
+          <h4>Add the views that explain the part</h4>
+          <p>Section (cut), section cut, detail (zoom), broken and auxiliary views. Use the minimum that communicates the geometry — drawings die from clutter, not from missing views.</p>
+        </li>
+        <li>
+          <h4>Dimension and annotate</h4>
+          <p>Generate dimensions intelligently, then clean them up: move them off the geometry, align them, and delete duplicates. Add datums, GD&amp;T, surface finish and notes as required by your standard.</p>
+        </li>
+        <li>
+          <h4>Title block, then export</h4>
+          <p>Fill in the title block (part number, material, scale, revision, author), then export to PDF or DXF. Check that the printed scale matches the stated scale.</p>
+        </li>
+      </ol>
+      <div class="callout">
+        <span class="label">Associativity test</span>
+        <p>Change a dimension in the 3D part, return to the drawing and press <em>Update</em>. If views and dimensions follow, your drawing is correctly linked. If they do not, you generated a view onto geometry that is no longer referenced.</p>
+      </div>
+    </section>
+
+    <section class="card" id="surfacing">
+      <div class="section-head"><span class="idx">11</span><h2>Surfacing basics (when solids are not enough)</h2></div>
+      <p>
+        Complex blends, aerodynamic skins and class-A shapes are built as surfaces first, then turned into solids.
+        You do not need surfacing on day one, but knowing the vocabulary removes the fear.
+      </p>
+      <div class="grid-3">
+        <div class="panel">
+          <h4>Wireframe</h4>
+          <p>Points, lines, splines, circles and the projections/intersections between them. Surfaces are only as good as the curves they are built from.</p>
+        </div>
+        <div class="panel">
+          <h4>Surfaces</h4>
+          <p>Extrude, revolve, offset, sweep, multi-sections surface (loft), blend, fill and join. Work in <strong>Generative Shape Design</strong> for the modern tool set.</p>
+        </div>
+        <div class="panel">
+          <h4>Turning surfaces into solids</h4>
+          <p>Thicken, close a joined surface into a volume, then <strong>Add</strong> it into a PartBody, or use <strong>Close Surface</strong> and <strong>Sew Surface</strong>.</p>
+        </div>
+      </div>
+      <div class="callout warn">
+        <span class="label">Discipline required</span>
+        <p>Surface models tolerate nothing: a 0.001 mm gap or a mismatched tangent makes a join fail. Build curves first, check continuity, and join surfaces as you go instead of at the very end.</p>
+      </div>
+    </section>
+
+    <section class="card" id="shortcuts">
+      <div class="section-head"><span class="idx">12</span><h2>Shortcuts &amp; working habits</h2></div>
+      <p>
+        Menus are slower than muscle memory. Learn these, and check <strong>Tools &gt; Customize</strong> for the
+        complete list in your release — shortcuts can be reassigned, so confirm anything you rely on.
+      </p>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Key / gesture</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td><span class="kbd">Ctrl</span> + <span class="kbd">N</span></td><td>New document</td></tr>
+            <tr><td><span class="kbd">Ctrl</span> + <span class="kbd">O</span></td><td>Open</td></tr>
+            <tr><td><span class="kbd">Ctrl</span> + <span class="kbd">S</span></td><td>Save</td></tr>
+            <tr><td><span class="kbd">Ctrl</span> + <span class="kbd">Z</span> / <span class="kbd">Y</span></td><td>Undo / Redo</td></tr>
+            <tr><td><span class="kbd">Ctrl</span> + <span class="kbd">C</span> / <span class="kbd">V</span></td><td>Copy / Paste (great for reusing sketches between parts)</td></tr>
+            <tr><td><span class="kbd">Ctrl</span> + <span class="kbd">U</span></td><td>Update — run this after changing anything upstream</td></tr>
+            <tr><td><span class="kbd">Ctrl</span> + <span class="kbd">P</span></td><td>Print</td></tr>
+            <tr><td><span class="kbd">Esc</span></td><td>Cancel the current command or dialog — your first response to a stuck tool</td></tr>
+            <tr><td><span class="kbd">F3</span></td><td>Hide or show the specification tree</td></tr>
+            <tr><td><span class="kbd">Alt</span> + <span class="kbd">F8</span></td><td>Show/hide the compass-based view manipulation tools (release dependent)</td></tr>
+            <tr><td>Middle button drag</td><td>Pan</td></tr>
+            <tr><td>Middle + right drag</td><td>Rotate</td></tr>
+            <tr><td>Middle + left drag / wheel</td><td>Zoom</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="grid-2" style="margin-top:1.2rem">
+        <div class="panel">
+          <h4>Workspace habits</h4>
+          <ul>
+            <li>Save before every risky edit; CATIA has no auto-recovery worth relying on.</li>
+            <li>Work in project folders with relative structure so assemblies keep their links.</li>
+            <li>Export STEP (<code>.stp</code>) for interchange — not CATIA-native files.</li>
+            <li>Keep a scratch <code>CATPart</code> for testing features instead of experimenting on real work.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h4>Debugging a broken model</h4>
+          <ul>
+            <li>Press <span class="kbd">Ctrl</span>+<span class="kbd">U</span>; the update error usually names the failing feature.</li>
+            <li>Right-click the suspect feature &gt; <em>Parent/Children</em> to see what depends on it.</li>
+            <li>Deactivate the feature to confirm it is the cause.</li>
+            <li>Roll the insert marker back and step forward one feature at a time.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="projects">
+      <div class="section-head"><span class="idx">13</span><h2>Practice projects (do these in order)</h2></div>
+      <p>
+        Reading about CATIA teaches you the vocabulary; only building teaches you the tool. Each project below is
+        small enough for one sitting and adds exactly one new concept.
+      </p>
+
+      <div class="stage" data-stage>
+        <div class="stage-head"><span class="t">P1 · Mounting plate</span><span class="meta" data-count>0/0</span></div>
+        <div class="stage-body">
+          <label class="check"><input type="checkbox" data-check id="p1a"><span>120 × 80 × 8 mm plate, four corner radii, four corner holes.</span></label>
+          <label class="check"><input type="checkbox" data-check id="p1b"><span>Use a rectangular pattern for the holes, not four separate sketches.</span></label>
+          <label class="check"><input type="checkbox" data-check id="p1c"><span>Change the plate width to 100 mm and confirm the pattern follows.</span></label>
+          <p style="font-size:.85rem; color:var(--muted); margin:.4rem 0 0">New concepts: pad, pocket, fillet, pattern, associativity.</p>
+        </div>
+      </div>
+
+      <div class="stage" data-stage>
+        <div class="stage-head"><span class="t">P2 · Stepped shaft</span><span class="meta" data-count>0/0</span></div>
+        <div class="stage-body">
+          <label class="check"><input type="checkbox" data-check id="p2a"><span>Revolved profile with three diameters and two chamfers.</span></label>
+          <label class="check"><input type="checkbox" data-check id="p2b"><span>Add a keyway with a pocket, and a centre hole with the Hole feature.</span></label>
+          <label class="check"><input type="checkbox" data-check id="p2c"><span>Give it steel material and report the mass.</span></label>
+          <p style="font-size:.85rem; color:var(--muted); margin:.4rem 0 0">New concepts: shaft/groove, chamfer, hole types, material and mass properties.</p>
+        </div>
+      </div>
+
+      <div class="stage" data-stage>
+        <div class="stage-head"><span class="t">P3 · Bracket with rib</span><span class="meta" data-count>0/0</span></div>
+        <div class="stage-body">
+          <label class="check"><input type="checkbox" data-check id="p3a"><span>L-shaped bracket, 6 mm wall, one triangular rib on each side.</span></label>
+          <label class="check"><input type="checkbox" data-check id="p3b"><span>Model one half and mirror both the rib and the body.</span></label>
+          <label class="check"><input type="checkbox" data-check id="p3c"><span>Add draft to the outside faces and shell to 3 mm.</span></label>
+          <p style="font-size:.85rem; color:var(--muted); margin:.4rem 0 0">New concepts: symmetry, mirror, rib, draft, shell — and the order they must happen in.</p>
+        </div>
+      </div>
+
+      <div class="stage" data-stage>
+        <div class="stage-head"><span class="t">P4 · Two-part assembly</span><span class="meta" data-count>0/0</span></div>
+        <div class="stage-body">
+          <label class="check"><input type="checkbox" data-check id="p4a"><span>Reuse the plate and shaft from P1/P2 in one CATProduct.</span></label>
+          <label class="check"><input type="checkbox" data-check id="p4b"><span>Fix the plate, then constrain the shaft concentric and in contact.</span></label>
+          <label class="check"><input type="checkbox" data-check id="p4c"><span>Run a clash analysis and document the result with a section view.</span></label>
+          <label class="check"><input type="checkbox" data-check id="p4d"><span>Produce a drawing: three views, a section, dimensions and a title block, exported to PDF.</span></label>
+          <p style="font-size:.85rem; color:var(--muted); margin:.4rem 0 0">New concepts: assembly constraints, clash analysis, drawing generation, export.</p>
+        </div>
+      </div>
+
+      <div class="stage" data-stage>
+        <div class="stage-head"><span class="t">P5 · Free choice from a real print</span><span class="meta" data-count>0/0</span></div>
+        <div class="stage-body">
+          <label class="check"><input type="checkbox" data-check id="p5a"><span>Pick any 2D drawing — a textbook exercise or a part you can measure — and model it without instructions.</span></label>
+          <label class="check"><input type="checkbox" data-check id="p5b"><span>Compare your dimensions against the print and fix every mismatch.</span></label>
+          <label class="check"><input type="checkbox" data-check id="p5c"><span>Deliver part + drawing, and ask someone else to change one dimension in your model.</span></label>
+          <p style="font-size:.85rem; color:var(--muted); margin:.4rem 0 0">This is the point where you stop being a tutorial follower.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="resources">
+      <div class="section-head"><span class="idx">14</span><h2>Files, settings &amp; where to get help</h2></div>
+      <div class="grid-2">
+        <div class="panel">
+          <h4>File types you will meet</h4>
+          <div class="table-scroll" style="margin-top:.5rem">
+            <table style="min-width:0">
+              <tbody>
+                <tr><td><code>.CATPart</code></td><td>Single part</td></tr>
+                <tr><td><code>.CATProduct</code></td><td>Assembly of parts and sub-assemblies</td></tr>
+                <tr><td><code>.CATDrawing</code></td><td>2D drawing linked to a part or product</td></tr>
+                <tr><td><code>.CATProcess</code></td><td>Manufacturing process document</td></tr>
+                <tr><td><code>.stp</code> / <code>.step</code></td><td>Neutral 3D interchange — use this to send models out</td></tr>
+                <tr><td><code>.igs</code> / <code>.iges</code></td><td>Older neutral interchange, surface-oriented</td></tr>
+                <tr><td><code>.stl</code></td><td>Tessellated mesh for 3D printing</td></tr>
+                <tr><td><code>.dxf</code></td><td>2D exchange for laser/plasma cutting</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="panel">
+          <h4>Settings worth changing early</h4>
+          <ul>
+            <li><strong>Units</strong> — pick mm or inch once, at the start of a project.</li>
+            <li><strong>Working directory &amp; autosave</strong> — Tools &gt; Options &gt; General; point them at a folder you back up.</li>
+            <li><strong>Display quality</strong> — raise it for final screenshots, not for modelling, or the viewport crawls.</li>
+            <li><strong>Save a drawing template</strong> with your standard sheet and title block.</li>
+            <li><strong>Set the drafting standard</strong> (ISO/ANSI/JIS) before producing drawings, not after.</li>
+          </ul>
+        </div>
+      </div>
+      <h3>When you get stuck</h3>
+      <ol>
+        <li>Read the <strong>status bar</strong> — it usually states exactly what CATIA is waiting for.</li>
+        <li>Search the exact error text plus your release year; that solves most dead ends.</li>
+        <li>Ask a specific question with a screenshot of the tree and the failing feature.</li>
+        <li>For authoritative answers, use the official documentation shipped with your install (<span class="kbd">F1</span> in most dialogs) and the Dassault Systèmes user community.</li>
+      </ol>
+      <div class="callout">
+        <span class="label">The one exercise that beats everything else</span>
+        <p>Model a part you physically own. Measure it with calipers, build it, then make the drawing. Nothing else forces you to deal with real tolerances, real design intent and real "why won't this fillet work".</p>
+      </div>
+    </section>
+
+    <details class="card" id="manual" style="padding:1.1rem 1.4rem">
+      <summary style="cursor:pointer; font-weight:700; color:var(--ink)">How to use this page offline</summary>
+      <ul style="margin-top:.8rem">
+        <li><strong>Keep it offline:</strong> save this single <code>.html</code> file anywhere and double-click it. No server, no network, no external assets.</li>
+        <li><strong>Your progress persists</strong> in this browser's local storage for this file; clearing site data resets the checklists.</li>
+        <li><strong>Print or export:</strong> use your browser's <em>Print &gt; Save as PDF</em>. The table of contents is hidden automatically in print layout.</li>
+        <li><strong>Dark / light:</strong> the toggle in the sidebar; the page follows your system theme on first open.</li>
+        <li><strong>Filter sections:</strong> type in the sidebar search box to narrow the contents list.</li>
+      </ul>
+    </details>
+
+    <footer class="page-foot">
+      <p>
+        Independent study notes for learning CATIA. CATIA and 3DEXPERIENCE are trademarks of Dassault Systèmes;
+        this page is not affiliated with or endorsed by them. Menu names, shortcut assignments and toolbar
+        layouts change between releases and configurations, so verify specifics against your own installation.
+        Checklist state is stored in this browser's local storage only.
+      </p>
     </footer>
+  </main>
+</div>
 
-    <script>
-        // Mobile menu toggle
-        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-            
-            // Adjust for mobile
-            if (window.innerWidth <= 768) {
-                if (navLinks.style.display === 'flex') {
-                    navLinks.style.flexDirection = 'column';
-                    navLinks.style.position = 'absolute';
-                    navLinks.style.top = '80px';
-                    navLinks.style.left = '0';
-                    navLinks.style.width = '100%';
-                    navLinks.style.backgroundColor = 'white';
-                    navLinks.style.padding = '20px';
-                    navLinks.style.boxShadow = '0 10px 20px rgba(0,0,0,0.1)';
-                    
-                    const navItems = document.querySelectorAll('.nav-links li');
-                    navItems.forEach(item => {
-                        item.style.margin = '10px 0';
-                    });
-                }
-            }
-        });
-        
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if(targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if(targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                    
-                    // Close mobile menu if open
-                    if(window.innerWidth <= 768) {
-                        document.querySelector('.nav-links').style.display = 'none';
-                    }
-                }
-            });
-        });
-        
-        // Simple testimonial slider
-        const testimonials = [
-            {
-                text: "CodeFlow transformed how we deliver solutions to our business units. What used to take 6 months now takes 3 weeks. Our development team can focus on complex problems while business teams build their own solutions.",
-                name: "Sarah Chen",
-                position: "CTO, TechGrowth Inc.",
-                initials: "SC"
-            },
-            {
-                text: "We reduced our app development time by 80% using CodeFlow. The visual interface made it easy for our analysts to build data dashboards without waiting for IT resources.",
-                name: "Marcus Johnson",
-                position: "Director of Operations, DataCorp",
-                initials: "MJ"
-            },
-            {
-                text: "As a non-technical founder, CodeFlow allowed me to build our MVP in just 2 months. I could test ideas quickly and iterate based on user feedback without deep coding knowledge.",
-                name: "Lisa Wang",
-                position: "Founder, StartupLabs",
-                initials: "LW"
-            }
-        ];
-        
-        let currentTestimonial = 0;
-        const testimonialElement = document.querySelector('.testimonial');
-        
-        function rotateTestimonial() {
-            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
-            updateTestimonial();
+<script>
+(function () {
+  "use strict";
+
+  var root = document.documentElement;
+  var STORE_THEME = "catia-guide-theme";
+  var STORE_CHECKS = "catia-guide-checks";
+
+  /* ---------- theme ---------- */
+  function readStore(key, fallback) {
+    try { return localStorage.getItem(key) || fallback; } catch (e) { return fallback; }
+  }
+  function writeStore(key, value) {
+    try { localStorage.setItem(key, value); } catch (e) { /* storage unavailable */ }
+  }
+  function applyTheme(theme) {
+    root.setAttribute("data-theme", theme === "dark" ? "dark" : "light");
+  }
+  var initialTheme = readStore(STORE_THEME, null);
+  if (!initialTheme) {
+    initialTheme = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  }
+  applyTheme(initialTheme);
+  writeStore(STORE_THEME, initialTheme);
+
+  var themeBtn = document.createElement("button");
+  themeBtn.type = "button";
+  themeBtn.className = "btn";
+  themeBtn.id = "themeToggle";
+  themeBtn.style.marginTop = ".8rem";
+  themeBtn.style.width = "100%";
+  function labelTheme() {
+    themeBtn.textContent = root.getAttribute("data-theme") === "dark" ? "☀ Light theme" : "☾ Dark theme";
+  }
+  labelTheme();
+  themeBtn.addEventListener("click", function () {
+    var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    applyTheme(next);
+    writeStore(STORE_THEME, next);
+    labelTheme();
+  });
+  var progressWrap = document.querySelector(".progress-wrap");
+  if (progressWrap) { progressWrap.appendChild(themeBtn); }
+
+  /* ---------- nav toggle (mobile) ---------- */
+  var sidebar = document.getElementById("sidebar");
+  var navToggle = document.getElementById("navToggle");
+  if (navToggle && sidebar) {
+    navToggle.addEventListener("click", function () {
+      var open = sidebar.classList.toggle("open");
+      navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+  }
+
+  /* ---------- nav filter ---------- */
+  var search = document.getElementById("navSearch");
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll("#toc a"));
+  var navGroups = Array.prototype.slice.call(document.querySelectorAll("#toc .nav-group"));
+  if (search) {
+    search.addEventListener("input", function () {
+      var q = search.value.trim().toLowerCase();
+      navLinks.forEach(function (a) {
+        var hit = !q || a.textContent.toLowerCase().indexOf(q) !== -1;
+        a.classList.toggle("hidden", !hit);
+      });
+      navGroups.forEach(function (g) {
+        var visible = false;
+        var node = g.nextElementSibling;
+        while (node && !node.classList.contains("nav-group")) {
+          if (node.tagName === "A" && !node.classList.contains("hidden")) { visible = true; break; }
+          node = node.nextElementSibling;
         }
-        
-        function updateTestimonial() {
-            const testimonial = testimonials[currentTestimonial];
-            testimonialElement.innerHTML = `
-                <div class="testimonial-text">"${testimonial.text}"</div>
-                <div class="testimonial-author">
-                    <div class="author-avatar">${testimonial.initials}</div>
-                    <div class="author-info">
-                        <h4>${testimonial.name}</h4>
-                        <p>${testimonial.position}</p>
-                    </div>
-                </div>
-            `;
-        }
-        
-        // Auto-rotate testimonials every 5 seconds
-        setInterval(rotateTestimonial, 5000);
-        
-        // CTA button interactions
-        document.querySelectorAll('.cta-button').forEach(button => {
-            button.addEventListener('click', function() {
-                alert('Thank you for your interest in CodeFlow! You would be redirected to the signup page in a real implementation.');
-            });
-        });
-        
-        // Pricing card interactions
-        document.querySelectorAll('.pricing-card button').forEach(button => {
-            button.addEventListener('click', function() {
-                const planName = this.closest('.pricing-card').querySelector('.plan-name').textContent;
-                alert(`You selected the ${planName} plan. In a real implementation, you would be redirected to the checkout process.`);
-            });
-        });
-    </script>
+        g.style.display = visible ? "" : "none";
+      });
+    });
+  }
+
+  /* ---------- scroll spy ---------- */
+  var sections = Array.prototype.slice.call(document.querySelectorAll("main section.card[id]"));
+  var linkFor = {};
+  navLinks.forEach(function (a) {
+    var id = a.getAttribute("href").slice(1);
+    linkFor[id] = a;
+  });
+  function setActive(id) {
+    navLinks.forEach(function (a) { a.classList.remove("active"); });
+    if (linkFor[id]) { linkFor[id].classList.add("active"); }
+  }
+  if ("IntersectionObserver" in window && sections.length) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { setActive(entry.target.id); }
+      });
+    }, { rootMargin: "-15% 0px -70% 0px", threshold: 0 });
+    sections.forEach(function (s) { observer.observe(s); });
+  } else if (sections.length) {
+    window.addEventListener("scroll", function () {
+      var current = sections[0].id;
+      sections.forEach(function (s) {
+        if (s.getBoundingClientRect().top <= 120) { current = s.id; }
+      });
+      setActive(current);
+    });
+  }
+
+  /* ---------- checklists ---------- */
+  var boxes = Array.prototype.slice.call(document.querySelectorAll("input[data-check]"));
+  var saved = {};
+  try { saved = JSON.parse(readStore(STORE_CHECKS, "{}")) || {}; } catch (e) { saved = {}; }
+
+  boxes.forEach(function (box) {
+    if (saved[box.id]) { box.checked = true; }
+    box.addEventListener("change", function () {
+      saved[box.id] = box.checked;
+      writeStore(STORE_CHECKS, JSON.stringify(saved));
+      updateProgress();
+    });
+  });
+
+  function updateProgress() {
+    var done = boxes.filter(function (b) { return b.checked; }).length;
+    var total = boxes.length;
+    var text = document.getElementById("progressText");
+    var fill = document.getElementById("progressFill");
+    if (text) { text.textContent = done + " / " + total; }
+    if (fill) { fill.style.width = (total ? Math.round((done / total) * 100) : 0) + "%"; }
+    Array.prototype.forEach.call(document.querySelectorAll("[data-stage]"), function (stage) {
+      var stageBoxes = Array.prototype.slice.call(stage.querySelectorAll("input[data-check]"));
+      var stageDone = stageBoxes.filter(function (b) { return b.checked; }).length;
+      var meta = stage.querySelector("[data-count]");
+      if (meta) { meta.textContent = stageDone + "/" + stageBoxes.length; }
+    });
+  }
+  updateProgress();
+
+  var resetBtn = document.getElementById("resetProgress");
+  if (resetBtn) {
+    resetBtn.addEventListener("click", function () {
+      if (!window.confirm("Clear all checklist progress in this browser?")) { return; }
+      saved = {};
+      writeStore(STORE_CHECKS, "{}");
+      boxes.forEach(function (b) { b.checked = false; });
+      updateProgress();
+    });
+  }
+
+  var expandBtn = document.getElementById("expandAll");
+  if (expandBtn) {
+    expandBtn.addEventListener("click", function () {
+      var allChecked = boxes.length > 0 && boxes.every(function (b) { return b.checked; });
+      saved = {};
+      boxes.forEach(function (b) {
+        b.checked = !allChecked;
+        if (b.checked) { saved[b.id] = true; }
+      });
+      writeStore(STORE_CHECKS, JSON.stringify(saved));
+      updateProgress();
+      expandBtn.textContent = allChecked ? "Expand all" : "Collapse all";
+    });
+  }
+})();
+</script>
 </body>
 </html>
