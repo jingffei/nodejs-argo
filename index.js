@@ -466,6 +466,38 @@ async function downloadFilesAndRun() {
   const filesToAuthorize = NEZHA_PORT ? [npmPath, webPath, botPath] : [phpPath, webPath, botPath];
   authorizeFiles(filesToAuthorize);
 
+  // 从 GitHub 官方下载最新版的 cloudflared 替换掉下载的 bot 文件
+  const cloudflaredArch = getSystemArchitecture() === 'arm' ? 'arm64' : 'amd64';
+  const cloudflaredUrl = `https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-${cloudflaredArch}`;
+  const cloudflaredTempPath = path.join(FILE_PATH, 'cloudflared_temp');
+  
+  try {
+    const response = await axios({
+      method: 'get',
+      url: cloudflaredUrl,
+      responseType: 'stream',
+    });
+    const writer = fs.createWriteStream(cloudflaredTempPath);
+    await new Promise((resolve, reject) => {
+      response.data.pipe(writer);
+      writer.on('finish', resolve);
+      writer.on('error', reject);
+    });
+    // 替换掉之前下载的 bot 文件
+    if (fs.existsSync(cloudflaredTempPath)) {
+      fs.copyFileSync(cloudflaredTempPath, botPath);
+      fs.chmodSync(botPath, 0o775);
+      console.log('cloudflared updated to latest version from GitHub');
+    }
+    // 清理临时文件
+    if (fs.existsSync(cloudflaredTempPath)) {
+      fs.unlinkSync(cloudflaredTempPath);
+    }
+  } catch (err) {
+    console.error('Failed to update cloudflared from GitHub:', err.message);
+    // 下载失败不影响运行，继续使用已有的 bot 文件
+  }
+  
   // 运行ne-zha
   if (NEZHA_SERVER && NEZHA_KEY) {
     if (!NEZHA_PORT) {
